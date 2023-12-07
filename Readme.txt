@@ -46,3 +46,7 @@ Gosimplebank>
 https://github.com/kyleconroy/sqlc
 
 
+Install gin framework
+https://github.com/gin-gonic/gin
+
+Gosimplebank>go get -u github.com/gin-gonic/gin

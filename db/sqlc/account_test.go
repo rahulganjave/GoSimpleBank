@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"gosimplebank/util"
 	"testing"
 	"time"
@@ -11,10 +10,10 @@ import (
 )
 
 func createRandomAccount(t *testing.T) Account {
-	//user := createRandomUser(t)
+	user := createRandomUser(t)
 
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwner(), //user.Username,
+		Owner:    user.Username,
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
@@ -76,7 +75,7 @@ func TestDeleteAccount(t *testing.T) {
 
 	account2, err := testStore.GetAccount(context.Background(), account1.ID)
 	require.Error(t, err)
-	require.EqualError(t, err, sql.ErrNoRows.Error())
+	require.EqualError(t, err, ErrRecordNotFound.Error())
 	require.Empty(t, account2)
 }
 
