@@ -50,3 +50,30 @@ Install gin framework
 https://github.com/gin-gonic/gin
 
 Gosimplebank>go get -u github.com/gin-gonic/gin
+
+----
+
+Viper: https://github.com/spf13/viper
+
+GoSimpleBank>go get github.com/spf13/viper
+
+----
+gomock
+
+https://github.com/golang/mock
+
+GoSimpleBank>go install github.com/golang/mock/mockgen@v1.6.0
+GoSimpleBank>which mockgen
+GoSimpleBank>vi ~/.bash_profile //add export PATH=$PATH:~/go/bin
+GoSimpleBank>source ~/.bash_profile  //reload bash_profile
+GoSimpleBank>which mockgen
+
+GoSimpleBank>mockgen -destination destination_path Import_path_store_interface InterfaceName
+GoSimpleBank>mockgen -destination db/mock/store.go gosimplebank/db/sqlc Store
+//change package name
+GoSimpleBank>mockgen -package mockdb -destination db/mock/store.go gosimplebank/db/sqlc Store
+// add mock to makefile
+
+GoSimpleBank>git add .
+GoSimpleBank>git commit -m "Corrected test run"
+GoSimpleBank>git push -f origin main 
