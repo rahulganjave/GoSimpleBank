@@ -32,6 +32,8 @@ GoSimpleBank>migrate create -ext sql -dir db/migration -seq add_sessions
 GoSimpleBank>migrate create -ext sql -dir db/migration -seq add_verify_emails
 GoSimpleBank>migrate create -ext sql -dir db/migration -seq add_role_to_users
 
+GoSimpleBank>make migratedown
+GoSimpleBank>make migrateup
 GoSimpleBank>make postgres
 
 GoSimpleBank>make createdb
@@ -77,3 +79,10 @@ GoSimpleBank>mockgen -package mockdb -destination db/mock/store.go gosimplebank/
 GoSimpleBank>git add .
 GoSimpleBank>git commit -m "Corrected test run"
 GoSimpleBank>git push -f origin main 
+
+----------------------------------------------------------------
+GoSimpleBank>go get github.com/google/uuid
+GoSimpleBank>go get github.com/golang-jwt/jwt/v4
+GoSimpleBank>go get github.com/o1egl/paseto
+GoSimpleBank>go get github.com/aead/chacha20poly1305
+
