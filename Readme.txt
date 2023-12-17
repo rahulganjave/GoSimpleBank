@@ -128,3 +128,26 @@ GoSimpleBank>docker network inspect postgres14.5
 // to put app & postgres in same network
 GoSimpleBank>docker run --name gosimplebank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:secretkey@postgres14.5:5432/simple_bank?sslmode=disable" gosimplebanks:latest
 
+GoSimpleBank>git add .
+GoSimpleBank>git commit -m "add docker file"
+GoSimpleBank>git push origin ft/docker
+
+----------------------------------------------------------------
+#25 How to write docker-compose file and control service start-up orders with wait-for.sh
+https://docs.docker.com/compose/compose-file/compose-file-v3/
+GoSimpleBank>git checkout main
+GoSimpleBank>git pull
+GoSimpleBank>docker compose up
+GoSimpleBank>chmod +x start.sh
+
+GoSimpleBank>docker compose down
+GoSimpleBank>docker rmi gosimplebanks_api
+GoSimpleBank>docker compose up
+
+//add wait-for.sh
+//https://github.com/eficode/wait-for
+GoSimpleBank>chmod +x wait-for.sh
+GoSimpleBank>docker compose down
+GoSimpleBank>docker rmi gosimplebanks_api
+GoSimpleBank>docker compose up
+
