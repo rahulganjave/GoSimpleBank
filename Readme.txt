@@ -88,4 +88,43 @@ GoSimpleBank>go get github.com/aead/chacha20poly1305
 ----------------------------------------------------------------
 //Implement authentication middleware and authorization rules
 
+----------------------------------------------------------------
+#23 Build a minimal Golang Docker image with a multistage Dockerfile
+// move from main git branch to another working branch
+GoSimpleBank>git checkout -b ft/docker
+//check current status
+GoSimpleBank>git status
+
+//build docker image
+GoSimpleBank>docker build -t gosimplebank:latest .
+//list docker images
+GoSimpleBank>docker images
+
+----------------------------------------------------------------
+#24 How to use docker network to connect 2 stand-alone containers
+GoSimpleBank>docker rm gosimplebanks
+GoSimpleBank>docker ps -a
+GoSimpleBank>docker rm 58fsdf332(imageid)
+
+GoSimpleBank>docker run --name gosimplebank -p 8080:8080 gosimplebanks:latest
+//Run GIN in release mode 
+GoSimpleBank>docker run --name gosimplebank -p 8080:8080 -e GIN_MODE=release gosimplebanks:latest
+// to see postgres container network settings
+GoSimpleBank>docker container inspect postgres14.5
+GoSimpleBank>docker container inspect gosimplebank
+
+//easiest way to fix postgres network to connect update app.env, but not good every time need to build image, use viper
+GoSimpleBank>docker run --name gosimplebank -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:secretkey@172.17.0.3:5432/simple_bank?sslmode=disable" gosimplebanks:latest
+
+GoSimpleBank>docker network ls
+
+GoSimpleBank>docker network inspect bridge(i.e. network name)
+
+GoSimpleBank>docker network create bank-network
+GoSimpleBank>docker network connect bank-network postgres14.5
+GoSimpleBank>docker network inspect bank-network
+GoSimpleBank>docker network inspect postgres14.5
+
+// to put app & postgres in same network
+GoSimpleBank>docker run --name gosimplebank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:secretkey@postgres14.5:5432/simple_bank?sslmode=disable" gosimplebanks:latest
 
