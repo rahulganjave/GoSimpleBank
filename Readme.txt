@@ -85,4 +85,7 @@ GoSimpleBank>go get github.com/google/uuid
 GoSimpleBank>go get github.com/golang-jwt/jwt/v4
 GoSimpleBank>go get github.com/o1egl/paseto
 GoSimpleBank>go get github.com/aead/chacha20poly1305
+----------------------------------------------------------------
+//Implement authentication middleware and authorization rules
+
 
