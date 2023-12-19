@@ -151,3 +151,21 @@ GoSimpleBank>docker compose down
 GoSimpleBank>docker rmi gosimplebanks_api
 GoSimpleBank>docker compose up
 
+----------------------------------------------------------------
+#40 Define gRPC API and generate Go code with protobuf
+https://grpc.io/docs/protoc-installation/
+
+GoSimpleBank>brew install protobuf
+GoSimpleBank>protoc --version  # Ensure compiler version is 3+
+
+GoSimpleBank$ export PATH="$PATH:$(go env GOPATH)/bin"
+GoSimpleBank$ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+GoSimpleBank$ protoc-gen-go --version
+GoSimpleBank$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+GoSimpleBank$ protoc-gen-go-grpc --version
+
+// add required proto files & update makefile
+GoSimpleBank$ make proto
+GoSimpleBank$ go mod tidy
+----------------------------------------------------------------
+
