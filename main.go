@@ -4,10 +4,16 @@ import (
 	"context"
 	"gosimplebank/api"
 	db "gosimplebank/db/sqlc"
+	"gosimplebank/pb"
 	"gosimplebank/util"
 	"log"
+	"net"
+
+	"gosimplebank/gapi"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -25,7 +31,34 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
-	store := db.NewStore(connPool)              //DB
+	store := db.NewStore(connPool) //DB
+	runGrpcServer(config, store)
+}
+
+func runGrpcServer(config util.Config, store db.Store) {
+	server, err := gapi.NewServer(config, store) /*, taskDistributor*/
+	if err != nil {
+		log.Fatal("cannot create server", err)
+	}
+
+	// gprcLogger := grpc.UnaryInterceptor(gapi.GrpcLogger)
+	grpcServer := grpc.NewServer()
+	pb.RegisterSimpleBankServer(grpcServer, server)
+	reflection.Register(grpcServer)
+
+	listener, err := net.Listen("tcp", config.GRPCServerAddress)
+	if err != nil {
+		log.Fatal("cannot create listener", err)
+	}
+
+	log.Printf("start gRPC server at %s", listener.Addr().String())
+	err = grpcServer.Serve(listener)
+	if err != nil {
+		log.Fatal("cannot start gRPC server", err)
+	}
+}
+
+func runGinServer(config util.Config, store db.Store) {
 	server, err := api.NewServer(config, store) //Gin Server
 	if err != nil {
 		log.Fatal("cannot create server:", err)

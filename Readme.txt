@@ -168,4 +168,19 @@ GoSimpleBank$ protoc-gen-go-grpc --version
 GoSimpleBank$ make proto
 GoSimpleBank$ go mod tidy
 ----------------------------------------------------------------
+#41 How to run a golang gRPC server and call its API
+GoSimpleBank$ make server
+// gRpc client tool
+https://github.com/ktr0731/evans
+//Install evans
+GoSimpleBank>brew tap ktr0731/evans
+GoSimpleBank>brew install evans
+
+GoSimpleBank>evans -r repl
+//correct one
+GoSimpleBank>evans --host localhost --port 9090 -r repl
+// evans terminal
+localhost:9090> show service
+localhost:9090> call
+
 
